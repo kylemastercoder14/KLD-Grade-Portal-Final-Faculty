@@ -1,0 +1,197 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id       String @id @default(cuid())
+  username String
+  password String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Students {
+  id            String  @id @default(cuid())
+  studentNumber String
+  firstName     String
+  middleName    String?
+  lastName      String
+  extensionName String?
+  birthDate     String
+  age           String
+  gender        String
+  civilStatus   String
+  phoneNumber   String
+  region        String
+  province      String
+  city          String
+  barangay      String
+  houseNumber   String
+  zipCode       String
+  email         String
+  password      String
+  profileImage  String?
+  isArchive     Boolean @default(false)
+
+  elementarySchool String
+  highSchool       String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  yearLevelId String
+  yearLevels  YearLevels @relation(fields: [yearLevelId], references: [id])
+
+  programId String
+  programs  Programs @relation(fields: [programId], references: [id])
+
+  sectionId String
+  sections  Sections @relation(fields: [sectionId], references: [id])
+}
+
+model Teachers {
+  id            String  @id @default(cuid())
+  employeeId    String
+  firstName     String
+  middleName    String?
+  lastName      String
+  extensionName String?
+  birthDate     String
+  age           String
+  gender        String
+  civilStatus   String
+  phoneNumber   String
+  region        String
+  province      String
+  city          String
+  barangay      String
+  houseNumber   String
+  zipCode       String
+  email         String
+  password      String
+  profileImage  String?
+  isArchive     Boolean @default(false)
+  position      String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  asssignTeacher      AssignTeacher[]
+  assignCourseTeacher AssignCourseTeacher[]
+}
+
+model AssignTeacher {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  teacherId String
+  teacher   Teachers @relation(fields: [teacherId], references: [id])
+
+  sectionId String
+  section   Sections @relation(fields: [sectionId], references: [id])
+}
+
+model AssignCourseTeacher {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  teacherId String
+  teacher   Teachers @relation(fields: [teacherId], references: [id])
+
+  sectionId String
+  section   Sections @relation(fields: [sectionId], references: [id])
+
+  courseId String
+  course   Courses @relation(fields: [courseId], references: [id])
+}
+
+model YearLevels {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  student Students[]
+  section Sections[]
+}
+
+model Programs {
+  id        String   @id @default(cuid())
+  name      String
+  code      String
+  isArchive Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  student Students[]
+  section Sections[]
+}
+
+model Sections {
+  id        String   @id @default(cuid())
+  name      String
+  isArchive Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  yearLevelId String
+  yearLevels  YearLevels @relation(fields: [yearLevelId], references: [id])
+
+  programId String
+  programs  Programs @relation(fields: [programId], references: [id])
+
+  student             Students[]
+  assignTeacher       AssignTeacher[]
+  assignCourseTeacher AssignCourseTeacher[]
+}
+
+model Courses {
+  id           String   @id @default(cuid())
+  name         String
+  code         String
+  unit         Int
+  prerequisite String?
+  isArchive    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  assignCourseTeacher AssignCourseTeacher[]
+}
+
+model Semester {
+  id        String   @id @default(cuid())
+  name      String
+  year      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Announcement {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  image       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Logs {
+  id        String   @id @default(cuid())
+  action    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
