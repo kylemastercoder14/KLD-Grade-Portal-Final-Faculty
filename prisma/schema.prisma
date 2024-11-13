@@ -24,7 +24,7 @@ model Admin {
 
 model Students {
   id            String  @id @default(cuid())
-  studentNumber String
+  studentNumber String  @unique
   firstName     String
   middleName    String?
   lastName      String
@@ -59,6 +59,8 @@ model Students {
 
   sectionId String
   sections  Sections @relation(fields: [sectionId], references: [id])
+
+  grades Grades[]
 }
 
 model Teachers {
@@ -127,6 +129,7 @@ model YearLevels {
 
   student Students[]
   section Sections[]
+  grades  Grades[]
 }
 
 model Programs {
@@ -139,6 +142,7 @@ model Programs {
 
   student Students[]
   section Sections[]
+  grades  Grades[]
 }
 
 model Sections {
@@ -157,6 +161,7 @@ model Sections {
   student             Students[]
   assignTeacher       AssignTeacher[]
   assignCourseTeacher AssignCourseTeacher[]
+  grades              Grades[]
 }
 
 model Courses {
@@ -170,6 +175,7 @@ model Courses {
   updatedAt    DateTime @updatedAt
 
   assignCourseTeacher AssignCourseTeacher[]
+  grades              Grades[]
 }
 
 model Semester {
@@ -178,6 +184,7 @@ model Semester {
   year      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  grades    Grades[]
 }
 
 model Announcement {
@@ -192,6 +199,38 @@ model Announcement {
 model Logs {
   id        String   @id @default(cuid())
   action    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Period {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  grades    Grades[]
+}
+
+model Grades {
+  id            String     @id @default(cuid())
+  studentNumber String     @unique
+  student       Students   @relation(fields: [studentNumber], references: [studentNumber])
+  courseId      String
+  course        Courses    @relation(fields: [courseId], references: [id])
+  yearLevlId    String
+  yearLevels    YearLevels @relation(fields: [yearLevlId], references: [id])
+  semesterId    String
+  semester      Semester   @relation(fields: [semesterId], references: [id])
+  programId     String
+  programs      Programs   @relation(fields: [programId], references: [id])
+  periodId      String
+  period        Period     @relation(fields: [periodId], references: [id])
+  sectionId     String
+  section       Sections   @relation(fields: [sectionId], references: [id])
+  grade         Float
+  transmutation Float
+  remarks       String
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
