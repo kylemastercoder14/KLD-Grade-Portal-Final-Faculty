@@ -1,5 +1,4 @@
 import * as React from "react";
-import { LifeBuoy, Send } from "lucide-react"; // Lucide icons
 import { NavMain } from "@/components/nav-main";
 import { NavSecondary } from "@/components/nav-secondary";
 import { NavUser } from "@/components/nav-user";
@@ -15,6 +14,7 @@ import {
 import {
   IconBooks,
   IconBrandTabler,
+  IconFiles,
   IconLayersIntersect,
 } from "@tabler/icons-react";
 import Image from "next/image";
@@ -41,17 +41,10 @@ const data = {
       url: "/teacher/handled-courses",
       icon: IconBooks,
     },
-  ],
-  navSecondary: [
     {
-      title: "Support",
-      url: "#",
-      icon: LifeBuoy,
-    },
-    {
-      title: "Feedback",
-      url: "#",
-      icon: Send,
+      title: "Logs",
+      url: "/teacher/logs",
+      icon: IconFiles,
     },
   ],
 };
@@ -83,7 +76,7 @@ export function AppSidebar({ teacher, ...props }: AppSidebarProps) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavSecondary className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
         <NavUser teacher={teacher} />

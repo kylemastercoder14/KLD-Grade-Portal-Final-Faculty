@@ -1,5 +1,7 @@
-import * as React from "react"
-import { type LucideIcon } from "lucide-react"
+"use client";
+
+import * as React from "react";
+import { LifeBuoy, Send } from "lucide-react";
 
 import {
   SidebarGroup,
@@ -7,34 +9,42 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
+import SupportForm from "./forms/support-form";
 
 export function NavSecondary({
-  items,
   ...props
-}: {
-  items: {
-    title: string
-    url: string
-    icon: LucideIcon
-  }[]
-} & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
+}: {} & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
+  const [isSupportOpen, setIsSupportOpen] = React.useState(false);
+  const [isFeedbackOpen, setIsFeedbackOpen] = React.useState(false);
   return (
-    <SidebarGroup {...props}>
-      <SidebarGroupContent>
-        <SidebarMenu>
-          {items.map((item) => (
-            <SidebarMenuItem key={item.title}>
+    <>
+      <SupportForm
+        isOpen={isSupportOpen}
+        onClose={() => setIsSupportOpen(false)}
+      />
+      <SidebarGroup {...props}>
+        <SidebarGroupContent>
+          <SidebarMenu>
+            <SidebarMenuItem>
               <SidebarMenuButton asChild size="sm">
-                <a href={item.url}>
-                  <item.icon />
-                  <span>{item.title}</span>
+                <a onClick={() => setIsSupportOpen(true)} href="#">
+                  <LifeBuoy />
+                  <span>Support</span>
                 </a>
               </SidebarMenuButton>
             </SidebarMenuItem>
-          ))}
-        </SidebarMenu>
-      </SidebarGroupContent>
-    </SidebarGroup>
-  )
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild size="sm">
+                <a onClick={() => setIsFeedbackOpen(true)} href="#">
+                  <Send />
+                  <span>Feedback</span>
+                </a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroupContent>
+      </SidebarGroup>
+    </>
+  );
 }

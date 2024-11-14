@@ -6,7 +6,6 @@ import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import ClassRecordClient from "./_components/client";
-import Heading from "@/components/ui/heading";
 
 interface ClassRecordProps extends Students {
   sections: Sections;
@@ -37,13 +36,9 @@ const ClassRecord = () => {
 
   return (
     <div>
-      <Heading
-        title={course}
-        description={`Compute grades for all students of ${section}`}
-      />
       <Card className="mt-4">
         <CardContent>
-          <ClassRecordClient data={classRecord} />
+          <ClassRecordClient course={course} data={classRecord} />
         </CardContent>
       </Card>
     </div>

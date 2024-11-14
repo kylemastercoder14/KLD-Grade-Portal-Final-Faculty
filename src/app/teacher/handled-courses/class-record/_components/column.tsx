@@ -3,7 +3,6 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { CellAction } from "./cell-action";
 import Image from "next/image";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -33,10 +32,10 @@ export const columns: ColumnDef<StudentColumn>[] = [
             alt="Image"
             width={40}
             height={40}
-            className="object-cover rounded-md"
+            className="object-cover rounded-md no-print"
           />
         ) : (
-          <Avatar className="w-10 h-10 object-cover rounded-md">
+          <Avatar className="w-10 h-10 object-cover no-print rounded-md">
             <AvatarFallback className="rounded-md">
               {row.original.name.charAt(0)}
             </AvatarFallback>
@@ -79,10 +78,5 @@ export const columns: ColumnDef<StudentColumn>[] = [
   {
     accessorKey: "createdAt",
     header: "Date Created",
-  },
-  {
-    id: "actions",
-    header: "Actions",
-    cell: ({ row }) => <CellAction data={row.original} />,
   },
 ];

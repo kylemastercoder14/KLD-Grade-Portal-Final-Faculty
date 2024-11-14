@@ -5,6 +5,7 @@ import { columns, StudentColumn } from "./column";
 import { DataTable } from "@/components/ui/data-table";
 import { format } from "date-fns";
 import { Programs, Sections, Students, YearLevels } from "@prisma/client";
+import TableHeader from "./table-header";
 
 interface StudentsProps extends Students {
   programs: Programs | null;
@@ -12,7 +13,7 @@ interface StudentsProps extends Students {
   yearLevels: YearLevels | null;
 }
 
-const ClassRecordClient = ({ data }: { data: StudentsProps[] }) => {
+const ClassRecordClient = ({ data, course }: { data: StudentsProps[]; course: string }) => {
   const tableRef = useRef<HTMLTableElement>(null);
   const [isMounted, setIsMounted] = React.useState(false);
 
@@ -31,7 +32,7 @@ const ClassRecordClient = ({ data }: { data: StudentsProps[] }) => {
       status: item.isArchive ? "Inactive" : "Active",
       email: item.email,
       imageUrl: item.profileImage ?? "",
-      createdAt: format(item.createdAt, "MMMM do, yyyy"),
+      createdAt: format(item.createdAt, "MMMM dd, yyyy hh:mm a"),
     })) || [];
 
   if (!isMounted) {
@@ -40,6 +41,7 @@ const ClassRecordClient = ({ data }: { data: StudentsProps[] }) => {
 
   return (
     <div>
+      <TableHeader tableRef={tableRef} course={course} />
       <div ref={tableRef}>
         <DataTable searchKey="name" columns={columns} data={formattedData} />
       </div>

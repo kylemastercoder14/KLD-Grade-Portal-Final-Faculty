@@ -30,7 +30,7 @@ const ClassRecordClient = ({ data }: { data: StudentsProps[] }) => {
       sectionId: item.sections?.name ?? "",
       email: item.email,
       imageUrl: item.profileImage ?? "",
-      createdAt: format(item.createdAt, "MMMM do, yyyy"),
+      createdAt: format(item.createdAt, "MMMM dd, yyyy hh:mm a"),
     })) || [];
 
   if (!isMounted) {
