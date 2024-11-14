@@ -61,6 +61,7 @@ interface CustomProps {
   fieldType: FormFieldType;
   name: string;
   options?: Array<string>;
+  feedbackOptions?: { label: string; value: string; icon: string }[];
   dynamicOptions?: { label: string; value: string }[];
   label?: string;
   type?: string | number;
@@ -88,6 +89,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
     type,
     options,
     dynamicOptions,
+    feedbackOptions,
     label,
     autoFocus,
     renderedValue,
@@ -108,9 +110,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
             <FormControl>
               <div className="shad-input-outer">
                 <Input
-                  type={
-                    type === "password" && !showPassword ? "text" : type
-                  }
+                  type={type === "password" && !showPassword ? "text" : type}
                   placeholder={placeholder}
                   disabled={disabled}
                   {...field}
@@ -398,6 +398,37 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
                     {option}
                   </FormLabel>
                 </FormItem>
+              ))}
+          </RadioGroup>
+        </FormControl>
+      );
+
+    case FormFieldType.FEEDBACK_RADIO:
+      return (
+        <FormControl>
+          <RadioGroup
+            value={field.value}
+            onValueChange={field.onChange}
+            className="grid-cols-3"
+            disabled={disabled}
+          >
+            {feedbackOptions &&
+              feedbackOptions.map((option) => (
+                <label
+                  key={option.value}
+                  className="relative flex cursor-pointer flex-col items-center gap-3 rounded-lg border border-input px-2 py-3 text-center shadow-sm shadow-black/5 ring-offset-background transition-colors has-[[data-state=checked]]:border-ring has-[[data-state=checked]]:bg-accent has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring/70 has-[:focus-visible]:ring-offset-2"
+                >
+                  <FormControl>
+                    <RadioGroupItem
+                      value={option.value}
+                      className="sr-only after:absolute after:inset-0"
+                    />
+                  </FormControl>
+                  <p>{option.icon}</p>
+                  <p className="text-xs font-medium leading-none text-foreground">
+                    {option.label}
+                  </p>
+                </label>
               ))}
           </RadioGroup>
         </FormControl>

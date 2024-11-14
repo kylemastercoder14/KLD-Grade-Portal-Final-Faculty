@@ -11,6 +11,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import SupportForm from "./forms/support-form";
+import FeedbackForm from "./forms/feedback-form";
 
 export function NavSecondary({
   ...props
@@ -22,6 +23,11 @@ export function NavSecondary({
       <SupportForm
         isOpen={isSupportOpen}
         onClose={() => setIsSupportOpen(false)}
+      />
+
+      <FeedbackForm
+        isOpen={isFeedbackOpen}
+        onClose={() => setIsFeedbackOpen(false)}
       />
       <SidebarGroup {...props}>
         <SidebarGroupContent>
