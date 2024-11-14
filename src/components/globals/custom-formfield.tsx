@@ -99,7 +99,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
 
   const [showPassword, setShowPassword] = useState(false);
   const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
+    setShowPassword((prev) => !prev);
   };
 
   switch (fieldType) {
@@ -109,8 +109,15 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
           <HoverEffectWrapper disabled={disabled}>
             <FormControl>
               <div className="shad-input-outer">
+                {/* Input field */}
                 <Input
-                  type={type === "password" && !showPassword ? "text" : type}
+                  type={
+                    type === "password"
+                      ? showPassword
+                        ? "text"
+                        : "password"
+                      : type
+                  }
                   placeholder={placeholder}
                   disabled={disabled}
                   {...field}
@@ -118,13 +125,15 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
                   autoFocus={autoFocus}
                   onChange={(event) => {
                     let value = event.target.value;
+                    // Handle number type and ensure empty values do not result in NaN
                     if (type === "number") {
-                      // Handle empty value to avoid NaN
                       value = value === "" ? "" : String(parseFloat(value));
                     }
-                    field.onChange(value);
+                    field.onChange(value); // Trigger field onChange with the processed value
                   }}
                 />
+
+                {/* Toggle visibility for password fields */}
                 {type === "password" && (
                   <button
                     type="button"
@@ -135,9 +144,9 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
                     className="floating-right-btn"
                   >
                     {showPassword ? (
-                      <EyeOff className="w-4 h-4" />
+                      <EyeOff className="w-4 h-4" /> // Icon to indicate password visibility is off
                     ) : (
-                      <Eye className="w-4 h-4 opacity-50" />
+                      <Eye className="w-4 h-4 opacity-50" /> // Icon to indicate password visibility is on
                     )}
                   </button>
                 )}
@@ -341,7 +350,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
               <Button
                 variant={"outline"}
                 className={cn(
-                  "shad-input ml-2",
+                  "shad-input",
                   !field.value && "text-muted-foreground"
                 )}
                 disabled={disabled}
@@ -355,7 +364,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
               </Button>
             </FormControl>
           </PopoverTrigger>
-          <PopoverContent align="start" className=" w-auto p-0">
+          <PopoverContent align="start" className="w-auto p-0">
             <Calendar
               mode="single"
               captionLayout="dropdown-buttons"
@@ -505,11 +514,9 @@ const CustomFormField = (props: CustomProps) => {
               <FormLabel>
                 {label}
                 {isRequired === true ? (
-                  <span className="text-red-700 text-lg"> *</span>
+                  <span className="text-red-700 text-xs"> *</span>
                 ) : isRequired === false ? (
-                  <span className="text-gray-500 text-xs font-normal ml-2">
-                    (Optional)
-                  </span>
+                  <span className="text-gray-500 text-xs ml-2">(Optional)</span>
                 ) : (
                   ""
                 )}

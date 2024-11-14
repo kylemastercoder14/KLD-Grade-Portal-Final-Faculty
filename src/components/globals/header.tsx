@@ -35,10 +35,10 @@ const Header = () => {
           <BreadcrumbList>
             {pathSegments.map((segment, index) => {
               // Determine if the segment is "admin" to display "Home" instead and set href to /admin/dashboard
-              const isAdminSegment = segment === "admin";
+              const isAdminSegment = segment === "teacher";
               const displayName = isAdminSegment ? "Home" : segment;
               const breadcrumbPath = isAdminSegment
-                ? "/admin/dashboard"
+                ? "/teacher/dashboard"
                 : `/${pathSegments.slice(0, index + 1).join("/")}`;
               const isLast = index === pathSegments.length - 1;
 

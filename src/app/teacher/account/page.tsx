@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
+import React from "react";
 import { useUser } from "@/hooks/use-user";
 import db from "@/lib/db";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import React from "react";
-import { Button } from "@/components/ui/button";
+import AccountProfile from "@/components/globals/account-profile";
+import { Loader2 } from "lucide-react";
 
 const Account = async () => {
   const { teacherId } = await useUser();
@@ -14,14 +14,13 @@ const Account = async () => {
   });
   return (
     <>
-      <div className="flex items-center gap-2">
-        <Avatar className="w-16 h-16 mr-2">
-          <AvatarImage src={data?.profileImage ?? ""} />
-          <AvatarFallback>{data?.firstName.charAt(0)}{data?.lastName.charAt(0)}</AvatarFallback>
-        </Avatar>
-        <Button variant="secondary" size="sm">Change Picture</Button>
-        <Button variant="destructive" size="sm">Delete Picture</Button>
-      </div>
+      {data ? (
+        <AccountProfile user={data} />
+      ) : (
+        <div className="flex flex-col h-screen items-center justify-center">
+          <Loader2 className="w-10 h-10 animate-spin" />
+        </div>
+      )}
     </>
   );
 };

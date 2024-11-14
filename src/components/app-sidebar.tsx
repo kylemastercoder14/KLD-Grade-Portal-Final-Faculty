@@ -28,7 +28,7 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "/admin/dashboard",
+      url: "/teacher/dashboard",
       icon: IconBrandTabler,
     },
     {
