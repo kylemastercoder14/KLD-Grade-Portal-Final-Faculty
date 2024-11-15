@@ -74,7 +74,7 @@ const AccountProfile = ({ user }: { user: Teachers }) => {
 
   async function onSubmit(values: z.infer<typeof TeacherValidator>) {
     saveTeacher(values, {
-      onSuccess: () => router.push("/admin/teacher"),
+      onSuccess: () => router.push("/teacher/account"),
     });
   }
 

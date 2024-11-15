@@ -17,7 +17,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       variant="secondary"
       onClick={() =>
         router.push(
-          `https://kld-grade-portal-final-faculty.vercel.app/teacher/advisory-class/${data.section}`
+          `http://localhost:3000/teacher/advisory-class/${data.section}`
         )
       }
     >
