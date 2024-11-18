@@ -3,6 +3,8 @@ import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { ModeToggle } from "@/components/globals/mode-toggle";
 import LoginComponent from "@/components/forms/login-form";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import ResetPasswordComponent from "@/components/forms/reset-password";
 
 const Home = () => {
   return (
@@ -20,7 +22,7 @@ const Home = () => {
             height={100}
           />
           <p className="text-2xl text-white text-center font-bold">
-            KLD Student Portal
+            KLD Faculty Portal
           </p>
         </div>
         <p className="bg-black/40 text-center text-white px-5 py-1 rounded-md mt-3">
@@ -29,7 +31,22 @@ const Home = () => {
         </p>
         <Card className="mt-5">
           <CardContent className="p-5">
-            <LoginComponent />
+            <Tabs defaultValue="account">
+              <TabsList className="w-full">
+                <TabsTrigger value="account" className="w-[300px]">
+                  LOG IN
+                </TabsTrigger>
+                <TabsTrigger value="password" className="w-[300px]">
+                  PASSWORD RESET
+                </TabsTrigger>
+              </TabsList>
+              <TabsContent value="account">
+                <LoginComponent />
+              </TabsContent>
+              <TabsContent value="password">
+                <ResetPasswordComponent />
+              </TabsContent>
+            </Tabs>
           </CardContent>
         </Card>
         <p className="bg-black/40 text-center text-white px-5 py-1 rounded-md mt-3">

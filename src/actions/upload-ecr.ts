@@ -7,6 +7,20 @@ import db from "@/lib/db";
 
 export const insertGradeToDatabase = async (data: any[]) => {
   try {
+    const existingGrade = await db.grades.findFirst({
+      where: {
+        studentNumber: data[0].studentNumber,
+        courseCode: data[0].courseCode,
+        programCode: data[0].programCode,
+        sectionName: data[0].sectionName,
+        period: "Midterm Period",
+      },
+    });
+
+    if (existingGrade) {
+      return { error: "Grades already submitted." };
+    }
+
     const response = await db.grades.createMany({
       data: data.map((grade) => ({
         studentNumber: grade.studentNumber,

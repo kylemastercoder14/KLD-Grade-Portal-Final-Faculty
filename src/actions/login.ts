@@ -5,6 +5,10 @@ import db from "@/lib/db";
 import * as jose from "jose";
 import { cookies } from "next/headers";
 import bcryptjs from "bcryptjs";
+import { ResetEmailHTML } from "@/components/globals/reset-email";
+import nodemailer from "nodemailer";
+import { NewPasswordValidators } from "@/functions/validators";
+import { z } from "zod";
 
 export const loginAdmin = async (employeeNumber: string, password: string) => {
   if (!employeeNumber || !password) {
@@ -57,4 +61,115 @@ export const loginAdmin = async (employeeNumber: string, password: string) => {
 
 export const logout = async () => {
   cookies().set("Authorization", "", { maxAge: 0, path: "/" });
+};
+
+export const sendResetEmail = async (
+  name: string,
+  email: string,
+  teacherId: string
+) => {
+  const htmlContent = await ResetEmailHTML({
+    teacherId: teacherId,
+    name: name,
+  });
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "kylemastercoder14@gmail.com",
+      pass: "nyqdxtgnqtzxmtyx",
+    },
+  });
+
+  const message = {
+    from: "kylemastercoder14@gmail.com",
+    to: email,
+    subject: "Kolehiyo ng Lungsod ng Dasmariñas",
+    text: `Notification from Kolehiyo ng Lungsod ng Dasmariñas - Grade Portal`,
+    html: htmlContent,
+  };
+
+  try {
+    await transporter.sendMail(message);
+    return { success: true };
+  } catch (error) {
+    console.error("Error sending notification", error);
+    return { message: "An error occurred. Please try again." };
+  }
+};
+
+export const resetPassword = async (email: string) => {
+  if (!email) {
+    return { error: "KLD Email is required" };
+  }
+
+  try {
+    const teacher = await db.teachers.findFirst({
+      where: {
+        email,
+      },
+    });
+
+    if (!teacher) {
+      return { error: "Teacher not found" };
+    }
+
+    const fullName = teacher.firstName + " " + teacher.lastName;
+
+    await sendResetEmail(fullName, teacher.email, teacher.id);
+
+    return {
+      success:
+        "A password reset link has been sent to your email address. Please check your inbox and follow the instructions to reset your password.",
+    };
+  } catch (error: any) {
+    return {
+      error: `Failed to reset password. Please try again. ${
+        error.message || ""
+      }`,
+    };
+  }
+};
+
+export const updateNewPassword = async (
+  values: z.infer<typeof NewPasswordValidators>,
+  teacherId: string
+) => {
+  if (!teacherId) {
+    return { error: "Teacher ID is required" };
+  }
+
+  const validatedField = NewPasswordValidators.safeParse(values);
+
+  if (!validatedField.success) {
+    const errors = validatedField.error.errors.map((err) => err.message);
+    return { error: `Validation Error: ${errors.join(", ")}` };
+  }
+
+  const { password, confirmPassword } = validatedField.data;
+
+  if(password !== confirmPassword) {
+    return { error: "Passwords do not match" };
+  }
+
+  const hashedPassword = await bcryptjs.hash(password, 10);
+
+  try {
+    const teacher = await db.teachers.update({
+      data: {
+        password: hashedPassword,
+      },
+      where: {
+        id: teacherId,
+      },
+    });
+
+    return { success: "Password updated successfully", teacher };
+  } catch (error: any) {
+    return {
+      error: `Failed to update password. Please try again. ${
+        error.message || ""
+      }`,
+    };
+  }
 };

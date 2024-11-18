@@ -147,10 +147,16 @@ const UploadEcr = () => {
     setIsLoading(true);
     try {
       if (excelData && excelData.length > 0) {
-        await insertGradeToDatabase(excelData);
-        const uploadResult = await uploadFile(fileInputRef.current?.files?.[0] as File);
-        await uploadEcr(uploadResult.url);
-        toast.success(`ECR successfully uploaded.`);
+        const response = await insertGradeToDatabase(excelData);
+        if (response.error) {
+          toast.error(response.error);
+        } else {
+          const uploadResult = await uploadFile(
+            fileInputRef.current?.files?.[0] as File
+          );
+          await uploadEcr(uploadResult.url);
+          toast.success(`ECR successfully uploaded.`);
+        }
       }
     } catch (error) {
       toast.error("Error uploading data.");

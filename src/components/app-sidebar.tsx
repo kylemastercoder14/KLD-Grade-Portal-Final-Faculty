@@ -15,6 +15,7 @@ import {
   IconBooks,
   IconBrandTabler,
   IconFiles,
+  IconHeartHandshake,
   IconLayersIntersect,
 } from "@tabler/icons-react";
 import Image from "next/image";
@@ -40,6 +41,11 @@ const data = {
       title: "Handled Courses",
       url: "/teacher/handled-courses",
       icon: IconBooks,
+    },
+    {
+      title: "Consultation",
+      url: "/teacher/consultation",
+      icon: IconHeartHandshake,
     },
     {
       title: "Logs",

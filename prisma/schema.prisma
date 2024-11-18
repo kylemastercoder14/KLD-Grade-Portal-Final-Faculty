@@ -217,7 +217,7 @@ model Period {
 
 model Grades {
   id                 String   @id @default(cuid())
-  studentNumber      String   @unique
+  studentNumber      String
   student            Students @relation(fields: [studentNumber], references: [studentNumber])
   courseCode         String
   course             Courses  @relation(fields: [courseCode], references: [code])

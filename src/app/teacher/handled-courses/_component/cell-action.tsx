@@ -9,6 +9,8 @@ interface CellActionProps {
   data: HandledCoursesColumn;
 }
 
+// `https://kld-grade-portal-final-faculty.vercel.app/teacher/handled-courses/class-record?section=${data.section}&course=${data.course}`
+
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const router = useRouter();
   return (
@@ -17,7 +19,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       variant="secondary"
       onClick={() =>
         router.push(
-          `https://kld-grade-portal-final-faculty.vercel.app/teacher/handled-courses/class-record?section=${data.section}&course=${data.course}`
+          `http://localhost:3000/teacher/handled-courses/class-record?section=${data.section}&course=${data.course}`
         )
       }
     >
