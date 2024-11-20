@@ -154,8 +154,8 @@ const AccountProfile = ({ user }: { user: Teachers }) => {
         onConfirm={handleDeletePicture}
       />
       <div className="flex items-center gap-2">
-        <Avatar className="w-16 h-16 mr-2">
-          <AvatarImage src={profileImage ?? ""} />
+        <Avatar className="w-16 h-16 object-cover mr-2">
+          <AvatarImage className="object-cover" src={profileImage ?? ""} />
           <AvatarFallback>
             {user?.firstName.charAt(0)}
             {user?.lastName.charAt(0)}

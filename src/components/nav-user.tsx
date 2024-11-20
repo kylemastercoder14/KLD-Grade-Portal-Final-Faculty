@@ -1,6 +1,6 @@
 "use client";
 
-import { BadgeCheck, Bell, ChevronsUpDown, LogOut } from "lucide-react";
+import { BadgeCheck, ChevronsUpDown, LogOut } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -44,6 +44,7 @@ export function NavUser({ teacher }: { teacher: Teachers | null }) {
               >
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage
+                    className="object-cover"
                     src={teacher?.profileImage ?? ""}
                     alt={teacher?.firstName + " " + teacher?.lastName}
                   />
@@ -94,10 +95,6 @@ export function NavUser({ teacher }: { teacher: Teachers | null }) {
                 >
                   <BadgeCheck />
                   Account
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => router.push("/teacher/notification")}>
-                  <Bell />
-                  Notifications
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout}>
