@@ -44,7 +44,7 @@ const LoginComponent = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form className="space-y-3" onSubmit={form.handleSubmit(onSubmit)}>
         <CustomFormField
           fieldType={FormFieldType.INPUT}
           control={form.control}
