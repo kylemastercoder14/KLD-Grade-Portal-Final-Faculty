@@ -100,6 +100,7 @@ model Teachers {
   assignCourseTeacher AssignCourseTeacher[]
   consultation        Consultation[]
   advising            Advising[]
+  grades              Grades[]
 }
 
 model AssignTeacher {
@@ -228,6 +229,8 @@ model Grades {
   programs           Programs @relation(fields: [programCode], references: [code])
   sectionName        String
   section            Sections @relation(fields: [sectionName], references: [name])
+  teacherId          String
+  teacher            Teachers @relation(fields: [teacherId], references: [id])
   period             String
   grade              Float
   remarks            String
