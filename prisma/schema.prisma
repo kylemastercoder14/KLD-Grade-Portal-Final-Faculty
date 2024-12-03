@@ -235,9 +235,9 @@ model Grades {
   grade              Float
   remarks            String
   teacherSigned      Boolean  @default(true)
-  programChairSigned Boolean  @default(false)
-  deanSigned         Boolean  @default(false)
-  registrarSigned    Boolean  @default(false)
+  programChairSigned Boolean  @default(true)
+  deanSigned         Boolean  @default(true)
+  registrarSigned    Boolean  @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
