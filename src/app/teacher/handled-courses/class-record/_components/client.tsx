@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React from "react";
 import { columns, StudentColumn } from "./column";
 import { DataTable } from "@/components/ui/data-table";
 import { format } from "date-fns";
@@ -13,8 +13,13 @@ interface StudentsProps extends Students {
   yearLevels: YearLevels | null;
 }
 
-const ClassRecordClient = ({ data, course }: { data: StudentsProps[]; course: string }) => {
-  const tableRef = useRef<HTMLTableElement>(null);
+const ClassRecordClient = ({
+  data,
+  course,
+}: {
+  data: StudentsProps[];
+  course: string;
+}) => {
   const [isMounted, setIsMounted] = React.useState(false);
 
   React.useEffect(() => {
@@ -41,10 +46,8 @@ const ClassRecordClient = ({ data, course }: { data: StudentsProps[]; course: st
 
   return (
     <div>
-      <TableHeader tableRef={tableRef} course={course} />
-      <div ref={tableRef}>
-        <DataTable searchKey="name" columns={columns} data={formattedData} />
-      </div>
+      <TableHeader course={course} />
+      <DataTable searchKey="name" columns={columns} data={formattedData} />
     </div>
   );
 };

@@ -6,6 +6,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { ChevronsUpDown } from "lucide-react";
 
 export type StudentColumn = {
   id: string;
@@ -23,7 +24,17 @@ export type StudentColumn = {
 export const columns: ColumnDef<StudentColumn>[] = [
   {
     accessorKey: "name",
-    header: "Student",
+    header: ({ column }) => {
+      return (
+        <span
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex items-center cursor-pointer"
+        >
+          <p>Student</p>
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </span>
+      );
+    },
     cell: ({ row }) => (
       <div className="flex items-center gap-x-2">
         {row.original.imageUrl ? (
@@ -50,23 +61,73 @@ export const columns: ColumnDef<StudentColumn>[] = [
   },
   {
     accessorKey: "studentId",
-    header: "Student No.",
+    header: ({ column }) => {
+      return (
+        <span
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex items-center cursor-pointer"
+        >
+          <p>Student No.</p>
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </span>
+      );
+    },
   },
   {
     accessorKey: "programId",
-    header: "Program",
+    header: ({ column }) => {
+      return (
+        <span
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex items-center cursor-pointer"
+        >
+          <p>Program</p>
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </span>
+      );
+    },
   },
   {
     accessorKey: "yearLevelId",
-    header: "Year Level",
+    header: ({ column }) => {
+      return (
+        <span
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex items-center cursor-pointer"
+        >
+          <p>Year Level</p>
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </span>
+      );
+    },
   },
   {
     accessorKey: "sectionId",
-    header: "Section",
+    header: ({ column }) => {
+      return (
+        <span
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex items-center cursor-pointer"
+        >
+          <p>Section</p>
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </span>
+      );
+    },
   },
   {
     accessorKey: "status",
-    header: "Status",
+    header: ({ column }) => {
+      return (
+        <span
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex items-center cursor-pointer"
+        >
+          <p>Status</p>
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </span>
+      );
+    },
     cell: ({ row }) => (
       <Badge
         variant={row.original.status === "Active" ? "secondary" : "destructive"}
@@ -77,6 +138,16 @@ export const columns: ColumnDef<StudentColumn>[] = [
   },
   {
     accessorKey: "createdAt",
-    header: "Date Created",
+    header: ({ column }) => {
+      return (
+        <span
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex items-center cursor-pointer"
+        >
+          <p>Date Created</p>
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </span>
+      );
+    },
   },
 ];

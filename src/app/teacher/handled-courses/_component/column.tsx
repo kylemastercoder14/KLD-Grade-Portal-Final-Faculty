@@ -4,6 +4,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { CellAction } from "./cell-action";
+import { ChevronsUpDown } from "lucide-react";
 
 export type HandledCoursesColumn = {
   id: string;
@@ -17,15 +18,45 @@ export type HandledCoursesColumn = {
 export const columns: ColumnDef<HandledCoursesColumn>[] = [
   {
     accessorKey: "section",
-    header: "Section",
+    header: ({ column }) => {
+      return (
+        <span
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex items-center cursor-pointer"
+        >
+          <p>Section</p>
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </span>
+      );
+    },
   },
   {
     accessorKey: "course",
-    header: "Course",
+    header: ({ column }) => {
+      return (
+        <span
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex items-center cursor-pointer"
+        >
+          <p>Course</p>
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </span>
+      );
+    },
   },
   {
     accessorKey: "createdAt",
-    header: "Date Created",
+    header: ({ column }) => {
+      return (
+        <span
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex items-center cursor-pointer"
+        >
+          <p>Date Created</p>
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </span>
+      );
+    },
   },
   {
     id: "actions",

@@ -1,14 +1,11 @@
 "use client";
 
-import React, { RefObject } from "react";
-import MoreButton from "@/components/globals/more-button";
+import React from "react";
 import UploadEcr from "./upload-ecr";
 
 const TableHeader = ({
-  tableRef,
   course,
 }: {
-  tableRef: RefObject<HTMLTableElement>;
   course: string;
 }) => {
   return (
@@ -23,7 +20,6 @@ const TableHeader = ({
       </div>
       <div className="flex items-center gap-2">
         <UploadEcr />
-        <MoreButton tableRef={tableRef} />
       </div>
     </div>
   );

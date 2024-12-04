@@ -42,6 +42,7 @@ export const getAllStudentNumbers = async (section: string) => {
         sections: {
           name: section,
         },
+        isArchive: false,
       },
       include: {
         programs: true,

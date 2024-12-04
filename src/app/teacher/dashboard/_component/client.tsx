@@ -7,6 +7,8 @@ import { useGetAnnouncement } from "@/data/announcement";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
+import Lottie from "lottie-react";
+import emptyAnimation from "../../../../../public/animation/empty.json";
 
 const AnnouncementClient = () => {
   const [isMounted, setIsMounted] = React.useState(false);
@@ -61,9 +63,12 @@ const AnnouncementClient = () => {
           </div>
         ))
       ) : (
-        <h2 className="text-lg font-semibold text-muted-foreground">
-          No announcements found yet.
-        </h2>
+        <div className="flex flex-col items-center justify-center mx-auto gap-3 relative h-[50vh] w-full">
+          <div className="w-[400px] absolute h-[400px] left-[350px]">
+            <Lottie animationData={emptyAnimation} loop={true} />
+            <h3 className="text-center">No announcement found!</h3>
+          </div>
+        </div>
       )}
     </div>
   );

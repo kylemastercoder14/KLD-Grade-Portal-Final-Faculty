@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React from "react";
 import { columns, AdvisoryClassColumn } from "./column";
 import { DataTable } from "@/components/ui/data-table";
 import { toast } from "sonner";
@@ -9,7 +9,6 @@ import TableHeader from "./table-header";
 import { useGetAdvisoryClass } from "@/data/assign-adviser";
 
 const AdvisoryClassClient = () => {
-  const tableRef = useRef<HTMLTableElement>(null);
   const [isMounted, setIsMounted] = React.useState(false);
   const { data: advisoryClassData, error, isLoading } = useGetAdvisoryClass();
 
@@ -37,15 +36,13 @@ const AdvisoryClassClient = () => {
 
   return (
     <div>
-      <TableHeader tableRef={tableRef} />
-      <div ref={tableRef}>
-        <DataTable
-          loading={isLoading}
-          searchKey="name"
-          columns={columns}
-          data={formattedData}
-        />
-      </div>
+      <TableHeader />
+      <DataTable
+        loading={isLoading}
+        searchKey="name"
+        columns={columns}
+        data={formattedData}
+      />
     </div>
   );
 };
