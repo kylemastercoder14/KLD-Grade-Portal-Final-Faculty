@@ -147,9 +147,15 @@ model Programs {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+<<<<<<< HEAD
   student Students[]
   section Sections[]
   grades  Grades[]
+=======
+  student  Students[]
+  section  Sections[]
+  grades   Grades[]
+>>>>>>> b93cb7b6d95f077a373bac32d99ffd8c35d7c444
 }
 
 model Sections {
