@@ -14,7 +14,6 @@ import {
 import {
   IconBooks,
   IconBrandTabler,
-  IconFiles,
   IconFileText,
   IconHeartHandshake,
   IconLayersIntersect,
@@ -52,11 +51,6 @@ const data = {
       title: "Grade Submitted",
       url: "/teacher/grade-submitted",
       icon: IconFileText,
-    },
-    {
-      title: "Logs",
-      url: "/teacher/logs",
-      icon: IconFiles,
     },
   ],
 };

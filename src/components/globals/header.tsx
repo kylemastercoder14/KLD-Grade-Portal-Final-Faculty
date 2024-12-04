@@ -69,7 +69,7 @@ const Header = () => {
           onCheckedChange={handleToggle}
         />
         <Label htmlFor="dark-mode">
-          {theme === "light" ? "Dark" : "Light"} Mode
+          {theme === "light" ? "Light" : "Dark"} Mode
         </Label>
       </div>
     </header>
