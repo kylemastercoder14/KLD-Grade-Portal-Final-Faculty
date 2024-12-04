@@ -144,6 +144,26 @@ const AccountProfile = ({ user }: { user: Teachers }) => {
     }
   };
 
+  const positions = [
+    "Dean",
+    "Associate Dean",
+    "Program Director (Information System)",
+    "Program Director (Computer Science)",
+    "Program Director (Data Science)",
+    "Program Director (Psychology)",
+    "Director for Center Knowledge Management",
+    "Head, Data Privacy ",
+    "Head, Integrated Humanities and Social Sciences",
+    "Head, National Service Training Program",
+    "Head, Clinical Research",
+    "Year Level 1 Program Chair",
+    "Year Level 2 Program Chair",
+    "Health Education Subject Lead",
+    "Health Assessment Subject Lead",
+    "Instructor",
+    "Institute Clerk",
+  ];
+
   return (
     <>
       <AlertModal
@@ -176,7 +196,12 @@ const AccountProfile = ({ user }: { user: Teachers }) => {
           onChange={handleFileChange}
           className="hidden"
         />
-        <Button disabled={isImageChanging} onClick={() => setIsOpen(true)} variant="destructive" size="sm">
+        <Button
+          disabled={isImageChanging}
+          onClick={() => setIsOpen(true)}
+          variant="destructive"
+          size="sm"
+        >
           Delete Picture
         </Button>
       </div>
@@ -192,7 +217,7 @@ const AccountProfile = ({ user }: { user: Teachers }) => {
               isRequired
               fieldType={FormFieldType.INPUT}
               control={form.control}
-              disabled={isLoading}
+              disabled
             />
             <div className="grid md:grid-cols-4 grid-cols-1 gap-3">
               <CustomFormField
@@ -203,7 +228,7 @@ const AccountProfile = ({ user }: { user: Teachers }) => {
                 type="text"
                 fieldType={FormFieldType.INPUT}
                 control={form.control}
-                disabled={isLoading}
+                disabled
               />
               <CustomFormField
                 label="Middle Name"
@@ -213,7 +238,7 @@ const AccountProfile = ({ user }: { user: Teachers }) => {
                 type="text"
                 fieldType={FormFieldType.INPUT}
                 control={form.control}
-                disabled={isLoading}
+                disabled
               />
               <CustomFormField
                 label="Last Name"
@@ -223,7 +248,7 @@ const AccountProfile = ({ user }: { user: Teachers }) => {
                 type="text"
                 fieldType={FormFieldType.INPUT}
                 control={form.control}
-                disabled={isLoading}
+                disabled
               />
               <CustomFormField
                 label="Extension Name"
@@ -233,7 +258,7 @@ const AccountProfile = ({ user }: { user: Teachers }) => {
                 type="text"
                 fieldType={FormFieldType.INPUT}
                 control={form.control}
-                disabled={isLoading}
+                disabled
               />
             </div>
             <CustomFormField
@@ -244,7 +269,7 @@ const AccountProfile = ({ user }: { user: Teachers }) => {
               type="email"
               fieldType={FormFieldType.INPUT}
               control={form.control}
-              disabled={isLoading}
+              disabled
             />
             <CustomFormField
               label="Phone Number"
@@ -252,7 +277,7 @@ const AccountProfile = ({ user }: { user: Teachers }) => {
               type="phone"
               fieldType={FormFieldType.PHONE_INPUT}
               control={form.control}
-              disabled={isLoading}
+              disabled
               isRequired
             />
             <div className="grid md:grid-cols-2 grid-cols-1 gap-3">
@@ -264,7 +289,7 @@ const AccountProfile = ({ user }: { user: Teachers }) => {
                 type="date"
                 fieldType={FormFieldType.DATE_PICKER}
                 control={form.control}
-                disabled={isLoading}
+                disabled
               />
               <CustomFormField
                 label="Age"
@@ -273,7 +298,7 @@ const AccountProfile = ({ user }: { user: Teachers }) => {
                 isRequired
                 fieldType={FormFieldType.INPUT}
                 control={form.control}
-                disabled={isLoading}
+                disabled
               />
             </div>
             <div className="grid md:grid-cols-2 grid-cols-1 gap-3">
@@ -285,7 +310,7 @@ const AccountProfile = ({ user }: { user: Teachers }) => {
                 fieldType={FormFieldType.SELECT}
                 control={form.control}
                 options={["Male", "Female"]}
-                disabled={isLoading}
+                disabled
               />
               <CustomFormField
                 label="Marital Status"
@@ -295,7 +320,7 @@ const AccountProfile = ({ user }: { user: Teachers }) => {
                 fieldType={FormFieldType.SELECT}
                 control={form.control}
                 options={["Single", "Married", "Separated", "Widowed"]}
-                disabled={isLoading}
+                disabled
               />
             </div>
             <CustomFormField
@@ -306,7 +331,7 @@ const AccountProfile = ({ user }: { user: Teachers }) => {
               fieldType={FormFieldType.INPUT}
               type="text"
               control={form.control}
-              disabled={isLoading}
+              disabled
             />
             <CustomFormField
               label="Region"
@@ -346,7 +371,7 @@ const AccountProfile = ({ user }: { user: Teachers }) => {
                   label: option,
                   value: option,
                 }))}
-                disabled={isLoading}
+                disabled
               />
               <CustomFormField
                 label="Barangay"
@@ -359,7 +384,7 @@ const AccountProfile = ({ user }: { user: Teachers }) => {
                   label: option,
                   value: option,
                 }))}
-                disabled={isLoading || !selectedMunicipalityName}
+                disabled
               />
               <CustomFormField
                 label="Zip Code"
@@ -369,7 +394,7 @@ const AccountProfile = ({ user }: { user: Teachers }) => {
                 fieldType={FormFieldType.INPUT}
                 type="text"
                 control={form.control}
-                disabled={isLoading}
+                disabled
               />
             </div>
             <CustomFormField
@@ -379,13 +404,11 @@ const AccountProfile = ({ user }: { user: Teachers }) => {
               isRequired
               fieldType={FormFieldType.SELECT}
               control={form.control}
-              options={[
-                "Dean",
-                "Associate Dean",
-                "Professor I",
-                "Assistant Professor",
-              ]}
-              disabled={isLoading}
+              dynamicOptions={positions.map((option) => ({
+                label: option,
+                value: option,
+              }))}
+              disabled
             />
           </div>
           <h3 className="mt-5">Change Password</h3>

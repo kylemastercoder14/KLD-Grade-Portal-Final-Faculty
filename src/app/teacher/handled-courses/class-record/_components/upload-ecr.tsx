@@ -10,10 +10,21 @@ import { toast } from "sonner";
 import { insertGradeToDatabase, uploadEcr } from "@/actions/upload-ecr";
 import ConfirmModal from "@/components/globals/confirm-modal";
 import { uploadFile } from "@/lib/upload";
+import { Modal } from "@/components/ui/modal";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
 
 type JsonData = Record<string, unknown>[];
 type Grades = {
   studentNumber: any;
+  studentName: any;
   courseCode: any;
   programCode: any;
   sectionName: any;
@@ -78,7 +89,9 @@ const transformData = (data: JsonData): Grades[] => {
 const UploadEcr = () => {
   const searchParams = useSearchParams();
   const section = searchParams.get("section") || "";
+  const course = searchParams.get("course") || "";
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [studentNumbers, setStudentNumbers] = useState<string[]>([]);
   const [excelData, setExcelData] = useState<Grades[] | null>(null);
@@ -156,6 +169,7 @@ const UploadEcr = () => {
           );
           await uploadEcr(uploadResult.url);
           toast.success(`ECR successfully uploaded.`);
+          setIsModalOpen(true);
         }
       }
     } catch (error) {
@@ -169,6 +183,47 @@ const UploadEcr = () => {
 
   return (
     <>
+      <Modal
+        title="Midterm Grade Sheet"
+        description={`${course} (${section})`}
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          window.location.reload();
+        }}
+        className="max-w-4xl"
+      >
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Student Number</TableHead>
+              <TableHead>Student Name</TableHead>
+              <TableHead>Program</TableHead>
+              <TableHead>Final Grade</TableHead>
+              <TableHead>Remarks</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {excelData?.map((item, index) => (
+              <TableRow key={index}>
+                <TableCell>{item.studentNumber}</TableCell>
+                <TableCell>{item.studentName}</TableCell>
+                <TableCell>{item.programCode}</TableCell>
+                <TableCell>{item.grade.toFixed(2)}</TableCell>
+                <TableCell>
+                  <Badge
+                    variant={
+                      item.remarks === "PASSED" ? "secondary" : "destructive"
+                    }
+                  >
+                    {item.remarks}
+                  </Badge>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Modal>
       <ConfirmModal
         isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
