@@ -96,11 +96,13 @@ model Teachers {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  programId String
+  programs  Programs @relation(fields: [programId], references: [id])
+
   asssignTeacher      AssignTeacher[]
   assignCourseTeacher AssignCourseTeacher[]
   consultation        Consultation[]
   advising            Advising[]
-  grades              Grades[]
 }
 
 model AssignTeacher {
@@ -148,9 +150,10 @@ model Programs {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  student Students[]
-  section Sections[]
-  grades  Grades[]
+  student  Students[]
+  section  Sections[]
+  grades   Grades[]
+  teachers Teachers[]
 }
 
 model Sections {
@@ -229,8 +232,6 @@ model Grades {
   programs           Programs @relation(fields: [programCode], references: [code])
   sectionName        String
   section            Sections @relation(fields: [sectionName], references: [name])
-  teacherId          String
-  teacher            Teachers @relation(fields: [teacherId], references: [id])
   period             String
   grade              Float
   remarks            String
@@ -320,4 +321,11 @@ model Advising {
 
   courseId String
   course   Courses @relation(fields: [courseId], references: [id])
+}
+
+model Database {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
