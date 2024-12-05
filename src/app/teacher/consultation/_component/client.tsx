@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React from "react";
 import { columns, ConsultationColumn } from "./column";
 import { DataTable } from "@/components/ui/data-table";
 import { toast } from "sonner";
@@ -9,7 +9,6 @@ import TableHeader from "./table-header";
 import { useGetConsultation } from "@/data/consultation";
 
 const ConsultationClient = () => {
-  const tableRef = useRef<HTMLTableElement>(null);
   const [isMounted, setIsMounted] = React.useState(false);
   const { data: consultationData, error, isLoading } = useGetConsultation();
 
@@ -41,15 +40,13 @@ const ConsultationClient = () => {
 
   return (
     <div>
-      <TableHeader tableRef={tableRef} />
-      <div ref={tableRef}>
-        <DataTable
-          loading={isLoading}
-          searchKey="name"
-          columns={columns}
-          data={formattedData}
-        />
-      </div>
+      <TableHeader />
+      <DataTable
+        loading={isLoading}
+        searchKey="name"
+        columns={columns}
+        data={formattedData}
+      />
     </div>
   );
 };

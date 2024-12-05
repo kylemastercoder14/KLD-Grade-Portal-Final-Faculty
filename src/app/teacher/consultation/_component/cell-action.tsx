@@ -21,7 +21,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   };
   return (
     <>
-      <Button size="sm" disabled={data.status === "Confirmed"} variant="secondary" onClick={handleConfirm}>
+      <Button size="sm" variant="secondary" onClick={handleConfirm}>
         Confirm
       </Button>
     </>

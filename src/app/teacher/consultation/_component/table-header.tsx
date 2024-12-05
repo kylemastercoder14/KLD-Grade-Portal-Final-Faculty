@@ -1,13 +1,8 @@
 "use client";
 
-import React, { RefObject } from "react";
-import MoreButton from "@/components/globals/more-button";
+import React from "react";
 
-const TableHeader = ({
-  tableRef,
-}: {
-  tableRef: RefObject<HTMLTableElement>;
-}) => {
+const TableHeader = () => {
   return (
     <div className="flex md:items-center md:flex-row flex-col mb-5 mt-5 gap-2 md:justify-between">
       <div>
@@ -19,9 +14,6 @@ const TableHeader = ({
           efficiently, and ensure effective academic and personal support for
           students.
         </p>
-      </div>
-      <div className="flex items-center gap-2">
-        <MoreButton tableRef={tableRef} />
       </div>
     </div>
   );

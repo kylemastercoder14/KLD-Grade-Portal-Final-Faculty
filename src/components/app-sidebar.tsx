@@ -49,7 +49,7 @@ const data = {
     },
     {
       title: "Grade Submitted",
-      url: "/teacher/grade-submitted",
+      url: "/teacher/grades-submitted",
       icon: IconFileText,
     },
   ],

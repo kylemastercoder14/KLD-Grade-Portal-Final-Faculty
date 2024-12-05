@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { LifeBuoy, Logs, Send } from "lucide-react";
+import { LifeBuoy, Send } from "lucide-react";
 
 import {
   SidebarGroup,
@@ -32,14 +32,6 @@ export function NavSecondary({
       <SidebarGroup {...props}>
         <SidebarGroupContent>
           <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild size="sm">
-                <a href="/teacher/logs">
-                  <Logs />
-                  <span>Logs</span>
-                </a>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton asChild size="sm">
                 <a onClick={() => setIsSupportOpen(true)} href="#">

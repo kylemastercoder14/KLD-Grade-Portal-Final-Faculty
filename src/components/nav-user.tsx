@@ -23,17 +23,29 @@ import { Teachers } from "@prisma/client";
 import { logout } from "@/actions/login";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import AlertModal from "./ui/alert-modal";
 
 export function NavUser({ teacher }: { teacher: Teachers | null }) {
+  const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const { isMobile } = useSidebar();
   const router = useRouter();
   const handleLogout = async () => {
+    setLoading(true);
     await logout();
     toast.success("Logging out...");
-    router.push("/");
+    window.location.assign("/");
   };
+
   return (
     <>
+      <AlertModal
+        title="Are you sure you want to logout?"
+        isOpen={open}
+        loading={loading}
+        onClose={() => setOpen(false)}
+        onConfirm={handleLogout}
+      />
       <SidebarMenu>
         <SidebarMenuItem>
           <DropdownMenu>
@@ -97,7 +109,7 @@ export function NavUser({ teacher }: { teacher: Teachers | null }) {
                   Account
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogout}>
+                <DropdownMenuItem onClick={() => setOpen(true)}>
                   <LogOut />
                   Log out
                 </DropdownMenuItem>

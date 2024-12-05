@@ -164,10 +164,21 @@ const UploadEcr = () => {
         if (response.error) {
           toast.error(response.error);
         } else {
-          const uploadResult = await uploadFile(
-            fileInputRef.current?.files?.[0] as File
-          );
-          await uploadEcr(uploadResult.url);
+          const gradeId = `${excelData[0].courseCode}-${excelData[0].programCode}-${excelData[0].sectionName}`;
+          // Generate a timestamped file name
+          const timestamp = new Date().toISOString().replace(/[:.-]/g, "_");
+          const originalFile = fileInputRef.current?.files?.[0];
+          const customFileName = `${gradeId}_${timestamp}.${originalFile?.name
+            .split(".")
+            .pop()}`;
+
+          // Modify the file object to use the custom name
+          const renamedFile = new File([originalFile!], customFileName, {
+            type: originalFile?.type,
+          });
+
+          const uploadResult = await uploadFile(renamedFile);
+          await uploadEcr(uploadResult.url, gradeId);
           toast.success(`ECR successfully uploaded.`);
           setIsModalOpen(true);
         }
@@ -191,9 +202,9 @@ const UploadEcr = () => {
           setIsModalOpen(false);
           window.location.reload();
         }}
-        className="max-w-4xl"
+        className="max-w-4xl overflow-y-auto h-[70vh]"
       >
-        <Table>
+        <Table className="">
           <TableHeader>
             <TableRow>
               <TableHead>Student Number</TableHead>

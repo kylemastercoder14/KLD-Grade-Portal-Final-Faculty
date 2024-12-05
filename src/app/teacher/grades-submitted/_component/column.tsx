@@ -2,12 +2,20 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import { IconFileDownload } from "@tabler/icons-react";
 import { ColumnDef } from "@tanstack/react-table";
+import { CellActionTeacher } from "./cell-action-teacher";
+import { CellActionProgramChair } from "./cell-action-program-chair";
+import { CellActionDean } from "./cell-action-dean";
 
 export type LogsColumn = {
   id: string;
   file: string;
+  teacher: string;
+  programChair: string;
+  dean: string;
+  position: string;
   createdAt: string;
 };
 
@@ -34,6 +42,21 @@ export const columns: ColumnDef<LogsColumn>[] = [
         </div>
       );
     },
+  },
+  {
+    accessorKey: "teacher",
+    header: "Teacher",
+    cell: ({ row }) => <CellActionTeacher data={row.original} />,
+  },
+  {
+    accessorKey: "programChair",
+    header: "Program Director",
+    cell: ({ row }) => <CellActionProgramChair data={row.original} />,
+  },
+  {
+    accessorKey: "dean",
+    header: "Dean",
+    cell: ({ row }) => <CellActionDean data={row.original} />,
   },
   {
     accessorKey: "createdAt",

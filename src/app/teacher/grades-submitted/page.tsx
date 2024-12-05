@@ -8,8 +8,8 @@ import {
 import React from "react";
 import GreetingsHeader from "@/components/globals/greetings-header";
 import { useUser } from "@/hooks/use-user";
-import { getAllGradesSubmitted } from "@/actions/grade-submitted";
-import GradeSubmittedClient from "./_component/client";
+import { getAllLogs } from "@/actions/logs";
+import LogsClient from "./_component/client";
 
 const GradeSubmitted = async () => {
   const { teacher } = await useUser();
@@ -17,8 +17,8 @@ const GradeSubmitted = async () => {
 
   // Prefetch the data from the server
   await queryClient.prefetchQuery({
-    queryKey: ["gradeSubmitted"],
-    queryFn: getAllGradesSubmitted,
+    queryKey: ["logs"],
+    queryFn: getAllLogs,
   });
 
   // Hydrate the query data for the client
@@ -30,7 +30,7 @@ const GradeSubmitted = async () => {
       <Card>
         <CardContent>
           <HydrationBoundary state={dehydratedState}>
-            <GradeSubmittedClient />
+            <LogsClient position={teacher?.position ?? ""} />
           </HydrationBoundary>
         </CardContent>
       </Card>

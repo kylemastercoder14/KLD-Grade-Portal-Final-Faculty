@@ -6,6 +6,7 @@ import { useUser } from "@/hooks/use-user";
 import db from "@/lib/db";
 
 export const insertGradeToDatabase = async (data: any[]) => {
+  const { teacherId } = await useUser();
   try {
     const existingGrade = await db.grades.findFirst({
       where: {
@@ -21,8 +22,15 @@ export const insertGradeToDatabase = async (data: any[]) => {
       return { error: "Grades already submitted." };
     }
 
+    if (!teacherId) {
+      return { error: "Teacher not found." };
+    }
+
+    const gradeId = `${data[0].courseCode}-${data[0].programCode}-${data[0].sectionName}`;
+
     const response = await db.grades.createMany({
       data: data.map((grade) => ({
+        teacherId: teacherId,
         studentNumber: grade.studentNumber,
         courseCode: grade.courseCode,
         programCode: grade.programCode,
@@ -30,6 +38,7 @@ export const insertGradeToDatabase = async (data: any[]) => {
         period: "Midterm Period",
         grade: grade.grade,
         remarks: grade.remarks,
+        gradeId,
       })),
     });
 
@@ -40,7 +49,7 @@ export const insertGradeToDatabase = async (data: any[]) => {
   }
 };
 
-export const uploadEcr = async (file: string) => {
+export const uploadEcr = async (file: string, gradeId: string) => {
   const { teacherId } = await useUser();
   if (!teacherId) {
     return { error: "Teacher not found." };
@@ -50,6 +59,7 @@ export const uploadEcr = async (file: string) => {
       data: {
         teacherId,
         name: file,
+        gradeId,
       },
     });
 
